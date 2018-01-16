@@ -588,11 +588,12 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Collab: 1
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 506ced68-0ac3-4247-b979-31c9238425c9
-  projectName: prolevelgen
+  cloudProjectId: 29f208eb-2288-459c-a770-fbc384c6ff77
+  projectName: prolevelgen (1)
   organizationId: fyasco
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

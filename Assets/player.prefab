@@ -167,7 +167,7 @@ Transform:
   m_GameObject: {fileID: 1912375953014284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.1, z: 0}
-  m_LocalScale: {x: -1.7715329, y: 1.7715304, z: 1}
+  m_LocalScale: {x: -3.5, y: 3.5, z: 1}
   m_Children:
   - {fileID: 4046590934738314}
   - {fileID: 4548307559767034}
@@ -381,6 +381,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4294966527
+  allowDJ: 1
 --- !u!114 &114256203986362408
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -464,7 +465,7 @@ SpriteRenderer:
   m_Size: {x: 0.6, y: 0.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!212 &212591409984134162
 SpriteRenderer:
@@ -548,7 +549,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 2.1333334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!212 &212775590139645184
 SpriteRenderer:
@@ -590,5 +591,5 @@ SpriteRenderer:
   m_Size: {x: 0.25, y: 0.2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0

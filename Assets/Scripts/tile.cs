@@ -14,7 +14,7 @@ public class Tile : MonoBehaviour {
 
 	public Tile()
 	{
-        this.parity = 1;
+        this.parity = 0;
         this.tileSprite = Random.Range (0, 7);
         this.tilePosition = new Vector2(0, 0);
         this.parityFlag = 0;
@@ -49,12 +49,20 @@ public class Tile : MonoBehaviour {
         return this.tilePosition;
     }
 
-    public void instantiateTile(Transform[] tiles){
+    public void instantiateTile(Transform[] tiles, int i, int j){
+        this.tileTransform = Instantiate (tiles [this.tileSprite], this.tilePosition, tiles [0].rotation);
+		this.tileTransform.parent = tiles [0].parent;
+        this.tileTransform.name = "Tile (" + i + ", " + j +")";
+    }
+
+    public void drawTile(){
         if (this.parity == 1) {
-            this.tileTransform = Instantiate (tiles [this.tileSprite], this.tilePosition, tiles [0].rotation);
-		    this.tileTransform.parent = tiles [0].parent;
             this.tileTransform.GetComponent<SpriteRenderer>().enabled = true;
-        } else print("Cannot instantiate non-wall tile at:" + this.tilePosition);
+            this.tileTransform.GetComponent<BoxCollider2D>().enabled = true;
+        } else if (this.parity == 0){
+            this.tileTransform.GetComponent<SpriteRenderer>().enabled = false;
+            this.tileTransform.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 
     public SpriteRenderer getSRenderer(){
@@ -69,15 +77,24 @@ public class Tile : MonoBehaviour {
 
     public void updateFlag(){
         for(int i = 0; i < 8; i++){
-            if(neighbours[i] != null){
-                this.parityFlag += neighbours[i].getIsWall();
-            }    
+            this.parityFlag += this.neighbours[i].getIsWall();
         }
     }
 
+    public void rule1(){
+        if (this.parityFlag > 4) this.parity = 1;
+    }
+
+    public void rule2(){
+        if (this.parityFlag <= 1) this.parity = 1;
+    }
+
     public void updateParity(int step){
-        if (this.parityFlag > 4 || (this.parityFlag <= 1 && step <= 4)) this.parity = 1;
-        else this.parity = 0;
+        this.parity = 0;
+        rule1();
+        if(step < 5){
+            rule2();
+        }
         this.neighbourCount = 0;
         this.parityFlag = 0;
     }
