@@ -81,20 +81,31 @@ public class Tile : MonoBehaviour {
         }
     }
 
-    public void rule1(){
-        if (this.parityFlag > 4) this.parity = 1;
+    public void deathRule(){
+        if(this.parity == 1){
+            if(this.parityFlag < 3) this.parity = 0;
+            else this.parity = 1;
+        }
     }
 
     public void rule2(){
-        if (this.parityFlag <= 1) this.parity = 1;
+        if (this.parity == 1 && this.parityFlag >= 2 && this.parityFlag <= 3) this.parity = 1;
+    }
+
+    public void rule3(){
+        if (this.parity == 1 && this.parityFlag > 3) this.parity = 0;
+    }
+
+    public void birthRule(){
+        if (this.parity == 0){
+            if(this.parityFlag > 4) this.parity = 1;
+            else this.parity = 0;
+        }
     }
 
     public void updateParity(int step){
-        this.parity = 0;
-        rule1();
-        if(step < 5){
-            rule2();
-        }
+        deathRule();
+        birthRule();
         this.neighbourCount = 0;
         this.parityFlag = 0;
     }
