@@ -20,7 +20,7 @@ public class GameMaster : MonoBehaviour {
 			player = GameObject.FindGameObjectWithTag("Player");
 		}
 
-		camera = GameObject.FindGameObjectWithTag("MainCamera");
+		camera = GameObject.FindGameObjectWithTag("overviewCamera");
 	}
 
 	public Transform playerPrefab;

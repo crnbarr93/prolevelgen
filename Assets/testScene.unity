@@ -153,11 +153,21 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4563970239039340, guid: 8a67dda07ea2f4a7da9129b9ddf39fe7, type: 2}
       propertyPath: m_LocalScale.x
-      value: -3.5
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4563970239039340, guid: 8a67dda07ea2f4a7da9129b9ddf39fe7, type: 2}
       propertyPath: m_LocalScale.y
-      value: 3.5
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114048582059504202, guid: 8a67dda07ea2f4a7da9129b9ddf39fe7,
+        type: 2}
+      propertyPath: jumpForce
+      value: 600
+      objectReference: {fileID: 0}
+    - target: {fileID: 50667921486920260, guid: 8a67dda07ea2f4a7da9129b9ddf39fe7,
+        type: 2}
+      propertyPath: m_LinearDrag
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8a67dda07ea2f4a7da9129b9ddf39fe7, type: 2}
@@ -914,7 +924,7 @@ Transform:
   m_GameObject: {fileID: 1705471813}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.011609316, y: 3.9434466, z: 28.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -1096,9 +1106,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a805f780831e449b9a6481b0a68f12db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boardSize: 64
+  boardSize: 100
   wallSeedPerc: 40
-  stepTotal: 8
+  stepTotal: 10
   tiles:
   - {fileID: 922235319}
   - {fileID: 1297678916}
