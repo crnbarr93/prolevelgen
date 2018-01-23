@@ -5,12 +5,16 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
 
     public int parity;
+    private int parityFlag;
+
     public int tileSprite;
     public Vector2 tilePosition;
     public Transform tileTransform;
-    private int parityFlag;
+
     private Tile[] neighbours;
     private int neighbourCount = 0;
+
+    private bool[] borders;
 
 	public Tile()
 	{
@@ -19,6 +23,8 @@ public class Tile : MonoBehaviour {
         this.tilePosition = new Vector2(0, 0);
         this.parityFlag = 0;
         this.neighbours = new Tile[8];
+        this.borders = new bool[4];
+        for(int i = 0; i < 4; i++) borders[i] = false;
 	}
 
 	public int getTileSprite(){
@@ -81,32 +87,51 @@ public class Tile : MonoBehaviour {
         }
     }
 
-    public void deathRule(){
-        if(this.parity == 1){
-            if(this.parityFlag < 3) this.parity = 0;
-            else this.parity = 1;
-        }
+    public void deathRule(int deathRate){
+        if(this.parityFlag < deathRate) this.parity = 0;
+        else this.parity = 1;
     }
 
-    public void rule2(){
-        if (this.parity == 1 && this.parityFlag >= 2 && this.parityFlag <= 3) this.parity = 1;
+    public void birthRule(int birthRate){
+        if(this.parityFlag > birthRate) this.parity = 1;
+        else this.parity = 0;
     }
 
-    public void rule3(){
-        if (this.parity == 1 && this.parityFlag > 3) this.parity = 0;
-    }
-
-    public void birthRule(){
-        if (this.parity == 0){
-            if(this.parityFlag > 4) this.parity = 1;
-            else this.parity = 0;
-        }
-    }
-
-    public void updateParity(int step){
-        deathRule();
-        birthRule();
-        this.neighbourCount = 0;
+    public void updateParity(int birthRate, int deathRate){
+        if(this.parity == 1) deathRule(deathRate);
+        if(this.parity == 0) birthRule(birthRate);
         this.parityFlag = 0;
+    }
+
+    public void setRoof(){
+        borders[0] = true;
+    }
+
+    public bool isRoof(){
+        return borders[0];
+    }
+
+    public void setLeftWall(){
+        borders[1] = true;
+    }
+
+    public bool isLeftWall(){
+        return borders[1];
+    }
+
+    public void setFloor(){
+        borders[2] = true;
+    }
+
+    public bool isFloor(){
+        return borders[2];
+    }
+
+    public void setRightWall(){
+        borders[3] = true;
+    }
+
+    public bool isRightWall(){
+        return borders[3];
     }
 }

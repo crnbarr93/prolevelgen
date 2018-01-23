@@ -6,9 +6,7 @@ public class boardMaster : MonoBehaviour {
 
 	public static boardMaster bm;
 	public int boardSize = 10;
-	public int wallSeedPerc = 45;
 
-	private int step;
 	public int stepTotal = 7;
 
 	public Transform[] tiles;
@@ -21,85 +19,85 @@ public class boardMaster : MonoBehaviour {
 
 	private Vector3 spawnPosition;
 
-	private bool counted;
-
 	private float spriteWidth;
 	private float spriteHeight;
+
+	public int birthRate = 4;
+	public int deathRate = 3;
 	
 	void Start () {
-		board = new Tile[boardSize, boardSize];
-		
-		floodBoard = new bool[boardSize, boardSize];
-		floodCount = 0;
-		maxFloodCount = 0;
-		counted = false;
-
-		spawnPosition = new Vector3(0.0f, 0.0f, 0.0f);
-
-		spriteWidth = tiles[0].GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
-		spriteHeight  = tiles [0].GetComponent<SpriteRenderer> ().sprite.bounds.size.y;
-
-		if (bm == null) bm = GameObject.FindGameObjectWithTag ("BM").GetComponent<boardMaster>();
-		
-		step = 0;
-
-		initialiseAssets(new Vector3 (0, 0, -30));
-		createBoard ();
+		initialiseAssets();
+		for(int i = 6; i < 8; i++){
+			for(int j = 6; j < 8; j++){
+				birthRate = i;
+				deathRate = j;
+				print("Rates: (" + birthRate + ", " + deathRate + ")");
+				generateLevel();
+			}
+		}
 	}
 
-	private	void Update() {
+	public void generateLevel(){
+		createBoard ();
+
+		for(int step = 0; step < stepTotal; step++){
+			caStep();
+		}
+
+		floodAndSpawn();
+		drawTiles();
+	}
+	
+	public void floodAndSpawn(){
 		Vector3 defaultPosition = new Vector3 ((-spriteWidth*boardSize)/2, (-spriteHeight*boardSize)/2, 0);
 
-		if(step < stepTotal && Input.GetKeyDown("s")){
-			caStep();
-			step++;
-		}
+		for(int i = 0; i < boardSize; i++){
+			for (int j = 0; j < boardSize; j++)
+			if(board[i,j].getIsWall() == 0 && !floodBoard[i,j]){
+				flood(i,j);
 
-		if(step == stepTotal && !counted){
-			for(int i = 0; i < boardSize; i++){
-				for (int j = 0; j < boardSize; j++)
-				if(board[i,j].getIsWall() == 0 && !floodBoard[i,j]){
-					flood(i,j);
-
-					if(floodCount > maxFloodCount){
-						maxFloodCount = floodCount;
-						
-						spawnPosition = new Vector3(defaultPosition.x + (i*spriteWidth), defaultPosition.y + (j*spriteHeight), 0);
-					}
-
-					floodCount = 0;
+				if(floodCount > maxFloodCount){
+					maxFloodCount = floodCount;
+					
+					spawnPosition = new Vector3(defaultPosition.x + (i*spriteWidth), defaultPosition.y + (j*spriteHeight), 0);
 				}
+
+				floodCount = 0;
 			}
-
-			counted = true;
-
-			print("Spawn position: " + spawnPosition + " Room size: " + maxFloodCount);
-			initialisePlayer(spawnPosition);
 		}
 
+		print("Spawn position: " + spawnPosition + " Room size: " + maxFloodCount);
+		initialisePlayer(spawnPosition);
 	}
 
 	public void createBoard(){
-		SpriteRenderer sRenderer;
 		int rndWall = 0;
 		Vector3 defaultPosition = new Vector3 ((-spriteWidth*boardSize)/2, (-spriteHeight*boardSize)/2, 0);
+		board = new Tile[boardSize, boardSize];
 
 		for (int i = 0; i < boardSize; i++) {
 			for (int j = 0; j < boardSize; j++) {
+				bool border = false;
 				rndWall = Random.Range(0,100);
 				
 				board[i, j] = new Tile();
 				floodBoard[i,j] = false;
+
 				board[i,j].setTilePosition(new Vector2(defaultPosition.x + (spriteWidth*i), defaultPosition.y + (spriteHeight*j)));
 				
-				if(i == 0 || i == boardSize-1 || j == 0 || j == boardSize-1) board[i,j].setIsWall(1);
-				else if (rndWall < wallSeedPerc){
+				if(i == 0 || i == boardSize-1 || j == 0 || j == boardSize-1) border = true;
+				
+				if (rndWall < 40 || border){
 					board[i,j].setIsWall(1);
 				}
-				
+			
 				board[i,j].instantiateTile(tiles, i, j);
-				board[i,j].drawTile();
+			}
+		}
 
+		for(int i = 1; i < boardSize-1; i++){
+			for(int j = 1; j < boardSize-1; j++){
+				addNeighbours(i,j);
 			}
 		}
 
@@ -116,20 +114,23 @@ public class boardMaster : MonoBehaviour {
 	public void caStep(){
 		for(int i = 1; i < boardSize - 1; i++){
 			for (int j = 1; j < boardSize - 1; j++){
-				addNeighbours(i,j);
-				
 				board[i,j].updateFlag();
-
-				board[i,j].drawTile();
 			}
 		}
 		for(int i = 1; i < boardSize - 1; i++){
 			for (int j = 1; j < boardSize - 1; j++){
-				board[i,j].updateParity(step);
+				board[i,j].updateParity(birthRate, deathRate);
 			}
 		}
 	}
 
+	public void drawTiles(){
+		for(int i = 0; i < boardSize; i++){
+			for(int j = 0; j< boardSize; j++){
+				board[i,j].drawTile();
+			}
+		}
+	}
 	public void flood(int i, int j){
 		if(floodBoard[i,j]) return;
 		if(board[i,j].getIsWall() == 1) return;
@@ -145,9 +146,18 @@ public class boardMaster : MonoBehaviour {
 		return;
 	}
 
-	public void initialiseAssets(Vector3 position){
-		initialiseCamera(position);
-		initialiseBackGround(position);
+	public void initialiseAssets(){
+		initialiseCamera(new Vector3 (0, 0, -30));
+		initialiseBackGround(new Vector3 (0, 0, -30));
+		
+		floodBoard = new bool[boardSize, boardSize];
+		floodCount = 0;
+		maxFloodCount = 0;
+
+		spriteWidth = tiles[0].GetComponent<SpriteRenderer> ().sprite.bounds.size.x;
+		spriteHeight  = tiles [0].GetComponent<SpriteRenderer> ().sprite.bounds.size.y;
+
+		if (bm == null) bm = GameObject.FindGameObjectWithTag ("BM").GetComponent<boardMaster>();
 	}
 
 	public void initialisePlayer(Vector3 position){
