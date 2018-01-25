@@ -9,6 +9,7 @@ TagManager:
   - BG
   - SP
   - overviewCamera
+  - loading
   layers:
   - Default
   - TransparentFX

@@ -8,8 +8,8 @@ public class GameMaster : MonoBehaviour {
 
 	public static GameMaster gm;
 	public Transform spawnPoint;
-	private GameObject player;
-	private GameObject camera;
+	public GameObject player;
+	public GameObject camera;
 	private int cameraFlag = 1;
 
 	void Start() {
@@ -34,10 +34,10 @@ public class GameMaster : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown("r"))
-			restartGame();
+			SceneManager.LoadScene(1);
 
 		if (Input.GetKeyDown ("q"))
-			exitGame ();
+			SceneManager.LoadScene(0);
 
 		if(Input.GetKeyDown ("k")){
 			Destroy(player);
