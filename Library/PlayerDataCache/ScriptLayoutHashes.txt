@@ -5,7 +5,7 @@ Assets/Scenes/loadingScreen.unity
 Assets/Scenes/mainLevel.unity
 SceneListEnd?
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LevelReset
-de3cdc2da7ba648158682bc73bc15242 Assembly-CSharp.dll:.boardMaster
+05d97d77e5616e70efa313441fdd30d2 Assembly-CSharp.dll:.boardMaster
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationPlayableAsset
 970a95104359198fe1a98ef48655de8c UnityEngine.Timeline.dll:UnityEngine.Timeline.ActivationTrack
 8144169769d51429c4aedc8b0f92d47b UnityEngine.Timeline.dll:UnityEngine.Timeline.AnimationPlayableAsset
@@ -122,8 +122,9 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 94da0eea5228a1e0d73f53b6249234fa Assembly-CSharp.dll:.Player
 78ebae5ed9b3edeb216da437b99754a4 Assembly-CSharp.dll:.Joystick
-2763f9319f4903ee7eba3d19287de822 Assembly-CSharp.dll:.sceneLoader
+09e2bf94dd838844f34b6dcc13a956a4 Assembly-CSharp.dll:.sceneLoader
 9927f9033995c048dcee5258ceb7659a Assembly-CSharp.dll:.CameraSwitch
+1589a9a2b779f4408896599a5d4ecb0f Assembly-CSharp.dll:.grapplingHook
 ea5b266549652435fdf1da3277694c2c Assembly-CSharp.dll:UnitySampleAssets.CrossPlatformInput.InputAxisScrollbar
 fe76270bd84ec3b6f2f6f92c69cf69da Assembly-CSharp.dll:.AxisTouchButton
 307d9f491fea791345eb6aa66e84c179 Assembly-CSharp.dll:UnitySampleAssets._2D.CameraFollow
@@ -131,6 +132,7 @@ fe76270bd84ec3b6f2f6f92c69cf69da Assembly-CSharp.dll:.AxisTouchButton
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:UnitySampleAssets.CrossPlatformInput.MobileControlRig
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.ropeTiling
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -151,7 +153,7 @@ e9bdabf9265d758d56f01bb188916fa8 UnityEngine.Networking.dll:UnityEngine.Networki
 96d0fbde9fd209878a0a291f82c9bcdd UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.PlaymodeTestsController
 64eb32cc721b1cc68a91ed57461e188c UnityEngine.TestRunner.dll:UnityEngine.TestTools.TestRunner.Callbacks.RemoteTestResultSender
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
-b5fc524991afb0776bfc461e86d21f22 Assembly-CSharp.dll:.GameMaster
+a42549d2a44899832f7ca5eb7f85c318 Assembly-CSharp.dll:.GameMaster
 e0f7ffd5d5c2abe4b2e16569a21163da UnityEngine.GoogleAudioSpatializer.dll:UnityEngine.Experimental.Audio.Google.GvrAudioRoom
 bc68edb0af574bf79f9550ead8ebae5c UnityEngine.HoloLens.dll:UnityEngine.Audio.AudioSpatializerMicrosoft
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.HoloLens.dll:UnityEngine.EventSystems.HoloLensInput
@@ -160,7 +162,8 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 45f3431f0103c41611e8d4eec3d439df UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.SpatialMappingRenderer
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.quitGame
 9de3a22eca9aefadba2d10d5987cefe3 UnityEngine.SpatialTracking.dll:UnityEngine.SpatialTracking.TrackedPoseDriver
-154c1158f8632c0618b5dd7c5cd8c50a Assembly-CSharp.dll:UnitySampleAssets._2D.Camera2DFollow
+fdd5ffa6c7c17370a80a4c5478ab8d91 Assembly-CSharp.dll:UnitySampleAssets._2D.Camera2DFollow
 c8df6666de2c1c8972f7d56ade588626 Assembly-CSharp.dll:.TouchPad
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.LoadSceneOnClick
-60fe402d1464aec762cb6bfb53f6e853 Assembly-CSharp.dll:UnitySampleAssets._2D.PlatformerCharacter2D
+1b21983d22e3245e14c0b532c67cd936 Assembly-CSharp.dll:.flicker
+2d35a45d1dc0fff88c5eb3f591485e80 Assembly-CSharp.dll:UnitySampleAssets._2D.PlatformerCharacter2D

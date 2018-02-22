@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
 	public PlayerStats playerStats = new PlayerStats();
 
 	void Update(){
-		if (transform.position.y <= -100) {
+		if (transform.position.y <= -10000) {
 			GameMaster.KillPlayer (this);
 		}
 	}

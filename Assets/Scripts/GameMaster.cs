@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnitySampleAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
 
 public class GameMaster : MonoBehaviour {
 
 	public static GameMaster gm;
+	private static boardMaster bm;
 	public Transform spawnPoint;
 	public GameObject player;
 	public GameObject camera;
 	private int cameraFlag = 1;
+
+	public Text scoreText;
+	private GameObject[] treasures;
+	private int treasureCount;
+	public short treasureScore;
 
 	void Start() {
 		if (gm == null) {
@@ -19,8 +26,14 @@ public class GameMaster : MonoBehaviour {
 		if (player == null){
 			player = GameObject.FindGameObjectWithTag("Player");
 		}
+		if (bm == null) {
+			bm = GameObject.FindGameObjectWithTag ("BM").GetComponent<boardMaster>();
+		}
 
 		camera = GameObject.FindGameObjectWithTag("overviewCamera");
+
+		treasureCount = 0;
+		treasureScore = 0;
 	}
 
 	public Transform playerPrefab;
@@ -46,6 +59,11 @@ public class GameMaster : MonoBehaviour {
 
 		if(Input.GetKeyDown("l")) 
 			swapCamera();
+
+		updateScore();
+
+		collectTreasure();
+
 
 	}
 
@@ -90,6 +108,32 @@ public class GameMaster : MonoBehaviour {
 			camera.GetComponent<Camera>().enabled = true;
 			cameraFlag = 1;
 		}
+	}
+
+	public void collectTreasure(){
+		foreach(GameObject treasure in treasures){
+			if(!treasure.Equals(null)){
+				float treasureHeight = treasure.GetComponent<SpriteRenderer>().bounds.size.x/2;
+				float treasureWidth = treasure.GetComponent<SpriteRenderer>().bounds.size.y/2;
+				if((player.transform.position.x >= treasure.transform.position.x - treasureHeight && player.transform.position.x <= treasure.transform.position.x + treasureHeight) && (player.transform.position.y >= treasure.transform.position.y - treasureWidth && player.transform.position.y <= treasure.transform.position.y + treasureWidth)){
+					treasureScore += 1;
+					Destroy(treasure);
+					print("Treasure collected @ :" + player.transform.position);
+				} 
+			}
+		}
+
+		//if(treasureScore == treasureCount) SceneManager.LoadScene(1);
+	}
+
+	public void updateScore(){
+		scoreText.text = treasureScore + "/" + treasureCount;
+	}
+
+	public void countTreasure(){
+		treasures = GameObject.FindGameObjectsWithTag("treasure");
+		
+		treasureCount = bm.treasureCoords.Count;
 	}
 
 }

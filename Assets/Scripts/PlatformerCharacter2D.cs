@@ -8,10 +8,7 @@ namespace UnitySampleAssets._2D
         private bool facingRight = true; // For determining which way the player is currently facing.
 
         [SerializeField] private float maxSpeed = 10f; // The fastest the player can travel in the x axis.
-        [SerializeField] private float jumpForce = 400f; // Amount of force added when the player jumps.	
-
-        [Range(0, 1)] [SerializeField] private float crouchSpeed = .36f;
-                                                     // Amount of maxSpeed applied to crouching movement. 1 = 100%
+        [SerializeField] private float jumpForce = 400f; // Amount of force added when the player jumps.
 
         [SerializeField] private bool airControl = false; // Whether or not a player can steer while jumping;
         [SerializeField] private LayerMask whatIsGround; // A mask determining what is ground to the character
@@ -41,7 +38,7 @@ namespace UnitySampleAssets._2D
             ceilingCheck = transform.Find("CeilingCheck");
             rightWallCheck = transform.Find("wallCheckRight");
             leftWallCheck = transform.Find("wallCheckLeft");
-            anim = GetComponent<Animator>();
+            anim = GetComponent<Transform>().GetChild(2).GetComponent<Animator>();
 			playerGraphics = transform.Find ("pixelman");
 			if (playerGraphics == null) {
 				Debug.LogError ("Error, no graphics found");
@@ -53,8 +50,6 @@ namespace UnitySampleAssets._2D
         {
             // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
             grounded = Physics2D.OverlapCircle(groundCheck.position, groundedRadius, whatIsGround);
-            rightWall = Physics2D.OverlapCircle(rightWallCheck.position, wallCheckRadius, whatIsGround);
-            leftWall = Physics2D.OverlapCircle(leftWallCheck.position, wallCheckRadius, whatIsGround);
             anim.SetBool("Ground", grounded);
 
             //if(rightWall) print("WALL ON RIGHT");
@@ -65,28 +60,28 @@ namespace UnitySampleAssets._2D
         }
 
 
-        public void Move(float move, bool crouch, bool jump)
+        public void Move(float move, bool jump)
         {
 
             //Double jump off wall
             if (!grounded){ //If mid air
                 if(jump){
-                    if (rightWall) { //If close to wall on right
-                        GetComponent<Rigidbody2D>().AddForce(new Vector2(-jumpForce, jumpForce)); //Jump backwards
-                        Flip(); 
-                        airControl = false; //Disable air control after jumping off wall
-                        doubleJ = false;
-                    }
-                    if(leftWall){ //Similarly for wall on left
-                        GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpForce, jumpForce));
-                        Flip();
-                        airControl = false;
-                        doubleJ = false;
-                    }
-                    if(!(rightWall || leftWall || doubleJ) && allowDJ && airControl){
-                        GetComponent<Rigidbody2D>().AddForce(new Vector2(0.0f, jumpForce));
-                        doubleJ = true;
-                    }
+                    // if (rightWall) { //If close to wall on right
+                    //     GetComponent<Rigidbody2D>().AddForce(new Vector2(-jumpForce, jumpForce)); //Jump backwards
+                    //     Flip(); 
+                    //     airControl = false; //Disable air control after jumping off wall
+                    //     doubleJ = false;
+                    // }
+                    // if(leftWall){ //Similarly for wall on left
+                    //     GetComponent<Rigidbody2D>().AddForce(new Vector2(jumpForce, jumpForce));
+                    //     Flip();
+                    //     airControl = false;
+                    //     doubleJ = false;
+                    // }
+                    // if(!(rightWall || leftWall || doubleJ) && allowDJ && airControl){
+                    //     GetComponent<Rigidbody2D>().AddForce(new Vector2(0.0f, jumpForce));
+                    //     doubleJ = true;
+                    // }
                 }
             }
 
@@ -95,22 +90,9 @@ namespace UnitySampleAssets._2D
                 if (doubleJ) doubleJ = false;
             }
 
-            // If crouching, check to see if the character can stand up
-            if (!crouch && anim.GetBool("Crouch"))
-            {
-                // If the character has a ceiling preventing them from standing up, keep them crouching
-                if (Physics2D.OverlapCircle(ceilingCheck.position, ceilingRadius, whatIsGround))
-                    crouch = true;
-            }
-
-            // Set whether or not the character is crouching in the animator
-            anim.SetBool("Crouch", crouch);
-
             //only control the player if grounded or airControl is turned on
             if (grounded || airControl)
             {
-                // Reduce the speed if crouching by the crouchSpeed multiplier
-                move = (crouch ? move*crouchSpeed : move);
 
                 // The Speed animator parameter is set to the absolute value of the horizontal input.
                 anim.SetFloat("Speed", Mathf.Abs(move));

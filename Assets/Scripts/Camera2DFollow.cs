@@ -11,8 +11,7 @@ namespace UnitySampleAssets._2D
         public float lookAheadFactor = 3;
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
-		public float yPosRestriction = -1;
-
+        public Sprite tile;
         private float offsetZ;
 		public float offSetY = 5;
         private Vector3 lastTargetPosition;
@@ -32,7 +31,13 @@ namespace UnitySampleAssets._2D
         // Update is called once per frame
         private void Update()
         {
-			if (target == null) {
+            float levelWidth = (GameObject.FindGameObjectWithTag("BM").GetComponent<boardMaster>().boardSize * GameObject.FindGameObjectWithTag("BM").GetComponent<boardMaster>().spriteWidth)/2;
+            float levelHeight = (GameObject.FindGameObjectWithTag("BM").GetComponent<boardMaster>().boardSize * GameObject.FindGameObjectWithTag("BM").GetComponent<boardMaster>().spriteHeight)/2;
+			
+            float cameraWidth = GameObject.FindGameObjectWithTag("BM").GetComponent<boardMaster>().spriteWidth * 9;
+            float cameraHeight = GameObject.FindGameObjectWithTag("BM").GetComponent<boardMaster>().spriteHeight * 7;
+
+            if (target == null) {
 				FindPlayer ();
 				return;
 			}
@@ -53,10 +58,8 @@ namespace UnitySampleAssets._2D
             Vector3 aheadTargetPos = target.position + lookAheadPos + Vector3.forward*offsetZ;
 			aheadTargetPos.y = aheadTargetPos.y + offSetY;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
-			newPos = new Vector3 (newPos.x, Mathf.Clamp(newPos.y, yPosRestriction, Mathf.Infinity), newPos.z);
-
+			newPos = new Vector3 (Mathf.Clamp(newPos.x, cameraWidth-levelWidth, levelWidth-cameraWidth), Mathf.Clamp(newPos.y,cameraHeight-levelHeight, levelHeight-cameraHeight), newPos.z);
             transform.position = newPos;
-
             lastTargetPosition = target.position;
         }
 

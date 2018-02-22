@@ -10,6 +10,11 @@ TagManager:
   - SP
   - overviewCamera
   - loading
+  - score
+  - treasure
+  - TileContainer
+  - tile
+  - treasureContainer
   layers:
   - Default
   - TransparentFX

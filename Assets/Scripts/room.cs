@@ -4,20 +4,22 @@ using UnityEngine;
 
 public class Room : MonoBehaviour {
 
-    public TileList ceiling;
-    public TileList floor;
-    public TileList leftWall;
-    public TileList rightWall;
-
+    public List<boardMaster.coordinate> edgeTiles;
 	public Room()
 	{
+        this.edgeTiles = new List<boardMaster.coordinate>();
 	}
 
-    public void appendCeiling(Tile tile){
-        ceiling.append(tile);
+    public void addEdgeTile(boardMaster.coordinate edge){
+        if(!edgeTiles.Contains(edge)) edgeTiles.Add(edge);
     }
 
-    public void appendLeftwall(Tile tile){
-        leftWall.append(tile);
+    public bool Equals(Room roomB){
+        foreach(boardMaster.coordinate coord1 in edgeTiles){
+            foreach(boardMaster.coordinate coord2 in roomB.edgeTiles){
+                if(coord1.Equals(coord2)) return true;
+            }
+        }
+        return false;
     }
 }
